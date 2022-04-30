@@ -1,3 +1,3 @@
-# scaffold-go
+# githubpal
 
-Tiny bootstrap/toolkit for Go applications. 
+Github pal, helps me with routine tasks around GitHub(c). 
