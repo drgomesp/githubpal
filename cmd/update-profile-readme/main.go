@@ -1,12 +1,23 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"fmt"
 	"github.com/google/go-github/v44/github" // with go modules enabled (GO111MODULE=on or outside GOPATH)
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"os"
+	"strings"
 )
+
+const MarkdownTemplate = `
+### Hi there 👋
+
+⚡ Newest projects:
+
+{{NEWEST}}
+`
 
 var Version string
 var BuildTime string
@@ -41,13 +52,17 @@ func main() {
 
 	const maxRepos = 15
 
+	newest := bytes.NewBufferString("")
 	for _, repo := range repos[:maxRepos] {
 		if !repo.GetFork() {
 			if repo.GetName() != user {
 				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
+				newest.WriteString(fmt.Sprintf("[%s/%s](%s) %s<br/>\n", user, repo.GetName(), repo.GetURL(), repo.GetDescription()))
 			}
 		}
 	}
 
-	log.Info().Msg("kurwa!")
+	tpl := strings.Replace(MarkdownTemplate, "{{NEWEST}}", newest.String(), 1)
+
+	log.Info().Msg(tpl)
 }
