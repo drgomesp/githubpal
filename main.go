@@ -31,14 +31,20 @@ func main() {
 		Sort: "created",
 		Type: "public",
 	}
-	repos, _, err := client.Repositories.List(context.Background(), "drgomesp", opt)
+
+	user := "drgomesp"
+	repos, _, err := client.Repositories.List(context.Background(), user, opt)
 
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
 
-	for _, repo := range repos[:10] {
-		log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
+	for _, repo := range repos[:30] {
+		if !repo.GetFork() {
+			if repo.GetName() != user {
+				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
+			}
+		}
 	}
 
 }
