@@ -39,7 +39,9 @@ func main() {
 		log.Fatal().Err(err).Send()
 	}
 
-	for _, repo := range repos[:30] {
+	const maxRepos = 15
+
+	for _, repo := range repos[:maxRepos] {
 		if !repo.GetFork() {
 			if repo.GetName() != user {
 				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
@@ -47,4 +49,5 @@ func main() {
 		}
 	}
 
+	log.Info().Msg("kurwa!")
 }

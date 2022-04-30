@@ -1,6 +1,6 @@
-NAME := scaffold-go
+NAME := githubpal
 VERSION := $(shell git describe --tags --always)
-SRC_DIR := .
+SRC_DIR := ./cmd/update-profile-readme
 
 GO_BUILD := go build -ldflags "-X main.Version=$(VERSION)"
 
