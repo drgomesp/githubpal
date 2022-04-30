@@ -38,7 +38,7 @@ func main() {
 	}
 
 	for _, repo := range repos[:10] {
-		log.Info().Interface("repo", repo.Name).Send()
+		log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
 	}
 
 }

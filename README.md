@@ -1,3 +1,3 @@
 # githubpal
 
-Github pal, helps me with routine tasks around GitHub(c). 
+Hey pal, could you help me with some routine Github(c) tasks?
