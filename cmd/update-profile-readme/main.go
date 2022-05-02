@@ -120,7 +120,7 @@ func main() {
 
 	author := &github.CommitAuthor{Name: github.String("drgomesp"), Email: github.String("drgomesp@gmail.com")}
 	_, _, err = client.Repositories.UpdateFile(ctx, user, user, "README.md", &github.RepositoryContentFileOptions{
-		Message:   github.String("test"),
+		Message:   github.String("updated profile readme"),
 		SHA:       &sha,
 		Content:   []byte(tpl),
 		Branch:    github.String("main"),
