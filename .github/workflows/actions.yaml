@@ -21,4 +21,4 @@ jobs:
       - run: echo $GITHUB_TOKEN
       - run: go run ./cmd/update-profile-readme/*.go
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
