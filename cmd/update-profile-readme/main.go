@@ -54,7 +54,7 @@ func main() {
 		log.Fatal().Err(err).Send()
 	}
 
-	const maxRepos = 15
+	const maxRepos = 20
 
 	newest := bytes.NewBufferString("")
 	for _, repo := range repos[:maxRepos] {
