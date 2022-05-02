@@ -17,7 +17,7 @@ import (
 )
 
 const MarkdownTemplate = `
-<sub>**~{{COMMITS}}** commits in the last 6 months.</sub>
+🌡️ <sub>**~{{COMMITS}}** commits in the last 6 months.</sub>
 
 ### Hi there 👋
 
