@@ -17,9 +17,11 @@ import (
 )
 
 const MarkdownTemplate = `
-🌡️ **~{{COMMITS}}** commits in the last 6 months.
-
 ### Hi there 👋
+
+I'm Daniel, a self-taught programmer who likes to build things from scratch in order to understand how they work.
+
+🌡️ **{{COMMITS}}** commits in the last 6 months.
 
 ⚡ Newest projects:
 
