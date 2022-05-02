@@ -99,8 +99,7 @@ func main() {
 			if repo.GetName() != user {
 				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
 				newest.WriteString(fmt.Sprintf(
-					"[%s/%s](%s) %s<br/>\n",
-					user,
+					"[ **[%s](%s)** ] %s<br/>\n",
 					repo.GetName(),
 					repo.GetSVNURL(),
 					repo.GetDescription()),
