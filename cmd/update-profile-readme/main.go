@@ -46,7 +46,7 @@ func main() {
 	ctx := context.Background()
 
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: "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"},
+		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
 	)
 	tc := oauth2.NewClient(ctx, ts)
 
