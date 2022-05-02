@@ -3,6 +3,8 @@ name: Work
 jobs:
   update-profile-readme:
     runs-on: ubuntu-latest
+    permissions:
+      repository-projects: write
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -17,5 +19,3 @@ jobs:
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - run: go run ./cmd/update-profile-readme/*.go
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
