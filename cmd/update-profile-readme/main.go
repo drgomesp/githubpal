@@ -3,7 +3,9 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/google/go-github/v44/github" // with go modules enabled (GO111MODULE=on or outside GOPATH)
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -28,6 +30,8 @@ func init() {
 }
 
 func main() {
+	ctx := context.Background()
+
 	if Version != "" {
 		log.Info().Msgf("Version: %s\t", Version)
 	}
@@ -56,11 +60,24 @@ func main() {
 	for _, repo := range repos[:maxRepos] {
 		if !repo.GetFork() {
 			if repo.GetName() != user {
-				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
+				log.Debug().Str(repo.GetName(), repo.GetDescription()).Send()
 				newest.WriteString(fmt.Sprintf("[%s/%s](%s) %s<br/>\n", user, repo.GetName(), repo.GetURL(), repo.GetDescription()))
 			}
 		}
 	}
+
+	content, _, _, err := client.Repositories.GetContents(
+		ctx,
+		user,
+		"drgomesp",
+		"README.md",
+		nil,
+	)
+
+	_ = repos
+
+	data, err := base64.StdEncoding.DecodeString(*content.Content)
+	spew.Dump(string(data))
 
 	tpl := strings.Replace(MarkdownTemplate, "{{NEWEST}}", newest.String(), 1)
 
