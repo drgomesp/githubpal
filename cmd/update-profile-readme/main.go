@@ -3,10 +3,12 @@ package main
 import (
 	"bytes"
 	"context"
+	_ "embed"
 	"encoding/base64"
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/google/go-github/v44/github" // with go modules enabled (GO111MODULE=on or outside GOPATH)
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/oauth2"
@@ -16,17 +18,8 @@ import (
 	"time"
 )
 
-const MarkdownTemplate = `
-### Hi there 👋
-
-I'm Daniel, a self-taught programmer who likes to build things from scratch in order to understand how they work.
-
-🌡️ **{{COMMITS}}** commits in the last 6 months.
-
-⚡ Newest projects:
-
-{{NEWEST}}
-`
+//go:embed "tpl.md"
+var MarkdownTemplate string
 
 var Version string
 var BuildTime string
@@ -101,7 +94,8 @@ func main() {
 			if repo.GetName() != user {
 				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
 				newest.WriteString(fmt.Sprintf(
-					"[ **[%s](%s)** ] %s<br/>\n",
+					"- **[%s/%s](%s)** %s<br/>\n",
+					user,
 					repo.GetName(),
 					repo.GetSVNURL(),
 					repo.GetDescription()),
