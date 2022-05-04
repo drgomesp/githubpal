@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	_ "embed"
 	"encoding/base64"
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
@@ -17,17 +18,8 @@ import (
 	"time"
 )
 
-const MarkdownTemplate = `
-### Hi there 👋
-
-I'm Daniel, a self-taught programmer who likes to build things from scratch in order to understand how they work.
-
-🌡️ **{{COMMITS}}** commits in the last 6 months.
-
-⚡ Newest projects:
-
-{{NEWEST}}
-`
+//go:embed "tpl.md"
+var MarkdownTemplate string
 
 var Version string
 var BuildTime string
@@ -70,15 +62,19 @@ func main() {
 	const maxRepos = 15
 
 	newest := bytes.NewBufferString("")
+	const weeks16 = time.Hour * 24 * 7 * 16
 
 	now := time.Now()
+	q := fmt.Sprintf("author:drgomesp sort:date-desc committer-date:>%s",
+		now.Add(-weeks16).Format("2006-01-02"))
 	searchResult, _, err := client.Search.Commits(
 		ctx,
-		fmt.Sprintf("author:drgomesp sort:date-desc committer-date:>%s",
-			now.Add(time.Duration(-6)*time.Hour*24*30*6).Format("2006-01-02")),
+		q,
 		&github.SearchOptions{
 			Sort: "author-date",
 		})
+
+	log.Debug().Str("q", q).Send()
 
 	if err != nil {
 		log.Fatal().Err(err).Send()
@@ -102,7 +98,8 @@ func main() {
 			if repo.GetName() != user {
 				log.Info().Str(repo.GetName(), repo.GetDescription()).Send()
 				newest.WriteString(fmt.Sprintf(
-					"[ **[%s](%s)** ] %s<br/>\n",
+					"- **[%s/%s](%s)** %s<br/>\n",
+					user,
 					repo.GetName(),
 					repo.GetSVNURL(),
 					repo.GetDescription()),
