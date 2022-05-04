@@ -62,15 +62,19 @@ func main() {
 	const maxRepos = 15
 
 	newest := bytes.NewBufferString("")
+	const weeks16 = time.Hour * 24 * 7 * 16
 
 	now := time.Now()
+	q := fmt.Sprintf("author:drgomesp sort:date-desc committer-date:>%s",
+		now.Add(-weeks16).Format("2006-01-02"))
 	searchResult, _, err := client.Search.Commits(
 		ctx,
-		fmt.Sprintf("author:drgomesp sort:date-desc committer-date:>%s",
-			now.Add(time.Duration(-6)*time.Hour*24*30*6).Format("2006-01-02")),
+		q,
 		&github.SearchOptions{
 			Sort: "author-date",
 		})
+
+	log.Debug().Str("q", q).Send()
 
 	if err != nil {
 		log.Fatal().Err(err).Send()
