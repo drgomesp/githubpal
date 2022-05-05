@@ -7,7 +7,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/google/go-github/v44/github" // with go modules enabled (GO111MODULE=on or outside GOPATH)
+	"github.com/google/go-github/v44/github"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
