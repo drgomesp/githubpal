@@ -1,6 +1,6 @@
 NAME := githubpal
 VERSION := $(shell git describe --tags --always)
-SRC_DIR := ./cmd/update-profile-readme
+SRC_DIR := ./cmd/$(NAME)
 
 GO_BUILD := go build -ldflags "-X main.Version=$(VERSION)"
 
