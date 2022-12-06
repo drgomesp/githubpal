@@ -117,7 +117,7 @@ var updateCmd = &cobra.Command{
 		tpl = strings.Replace(tpl, "{{NEWEST}}", newestRepo.String(), 1)
 		tpl = strings.Replace(tpl, "{{FULLNAME}}", config.Params.GetFullName(), 1)
 		tpl = strings.Replace(tpl, "{{NAME}}", config.Params.GetName(), 1)
-		tpl = strings.Replace(tpl, "{{URL}}", config.Params.GetURL(), 1)
+		tpl = strings.Replace(tpl, "{{URL}}", config.Params.GetURL(), -1)
 
 		fmt.Println(tpl)
 
