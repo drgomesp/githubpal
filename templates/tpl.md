@@ -14,4 +14,4 @@ technology, just to name a few.
 
 ~ [{{URL}}][2]
 
-[2]: https://{{URL}}
+[2]: {{URL}}
