@@ -18,11 +18,13 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: '^1.19'
-      - run: go version
+      - run: | 
+          go version
+          go mod tidy
      
       - name: Run update profile
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_LOGIN: ${{ secrets.GH_LOGIN }}
           FULL_NAME: ${{ secrets.FULL_NAME }}
           NAME: ${{ secrets.NAME }}
