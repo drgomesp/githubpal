@@ -14,7 +14,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: '^1.18' # The Go version to download (if necessary) and use.
+          go-version: '^1.19' # The Go version to download (if necessary) and use.
       - run: go version
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
