@@ -5,20 +5,32 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      
       - name: Checkout Repo
         uses: actions/checkout@v3
+      
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
-          go-version: '^1.18' # The Go version to download (if necessary) and use.
-      - run: go version
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - run: echo $GITHUB_TOKEN
-      - run: go run ./cmd/githubpal/*.go
+          go-version: '^1.19'
+      - run: | 
+          go version
+          go mod tidy
+     
+      - name: Run update profile
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_LOGIN: ${{ secrets.GH_LOGIN }}
+          FULL_NAME: ${{ secrets.FULL_NAME }}
+          NAME: ${{ secrets.NAME }}
+          LIMIT: ${{ secrets.LIMIT }}
+          URL: ${{ secrets.URL }}
+        run: | 
+          echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+          echo "🖥️ The workflow is now ready to test your code on the runner."
+          go run main.go update --login="$GITHUB_LOGIN" --repos="*" --fullname="$FULL_NAME" --name="$NAME" --limit=$LIMIT --url="$URL"
